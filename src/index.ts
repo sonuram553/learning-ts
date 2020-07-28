@@ -3,21 +3,19 @@ import { NumbersCollection } from "./NumbersCollection";
 import { CharactersCollection } from "./CharactersCollection";
 import { LinkedList } from "./LinkedList";
 
-const numbersCollection = new NumbersCollection([10, 2, 11, 2, 14]);
-const charsCollection = new CharactersCollection("adclpA");
+/* const numbersCollection = new NumbersCollection([10, 0, 11, 2, 14]);
+numbersCollection.sort();
+console.log(numbersCollection.data); */
+
+/* const charsCollection = new CharactersCollection("kladXjkAb");
+charsCollection.sort();
+console.log(charsCollection.data); */
 
 const linkedList = new LinkedList();
-linkedList.add(32);
-linkedList.add(2);
 linkedList.add(3);
-linkedList.add(0);
+linkedList.add(90);
+linkedList.add(10);
+linkedList.add(1);
 
-//const sorter = new Sorter(numbersCollection);
-//const sorter = new Sorter(charsCollection);
-const sorter = new Sorter(linkedList);
-
-sorter.sort();
-
-//console.log(numbersCollection.data);
-//console.log(charsCollection.data);
+linkedList.sort();
 linkedList.print();

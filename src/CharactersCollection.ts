@@ -1,7 +1,10 @@
-export class CharactersCollection {
+import { Sorter } from "./Sorter";
+
+export class CharactersCollection extends Sorter {
   arrOfChars: string[];
 
   constructor(private _data: string) {
+    super();
     this.arrOfChars = this._data.split("");
   }
 
