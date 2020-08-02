@@ -1,25 +1,29 @@
-import { MatchResult } from "./MatchResults";
 import { dateStringToDate } from "./utils";
-import { CsvFileReader } from "./CsvFileReader";
+import { MatchResult } from "./MatchResults";
 
 type MatchData = [Date, string, string, number, number, MatchResult, string];
 
-export class MatchReader extends CsvFileReader<MatchData> {
-  data: MatchData[] = [];
+interface DataReader {
+  data: string[][];
+  read(): void;
+}
 
-  constructor(public filename: string) {
-    super();
-  }
+export class MatchReader {
+  matches: MatchData[] = [];
+  constructor(public reader: DataReader) {}
 
-  mapRow(row: string[]): MatchData {
-    return [
-      dateStringToDate(row[0]),
-      row[1],
-      row[2],
-      +row[3],
-      +row[4],
-      row[5] as MatchResult,
-      row[6],
-    ];
+  load() {
+    this.reader.read();
+    this.matches = this.reader.data.map((record) => {
+      return [
+        dateStringToDate(record[0]),
+        record[1],
+        record[2],
+        +record[3],
+        +record[4],
+        record[5] as MatchResult,
+        record[6],
+      ];
+    });
   }
 }
