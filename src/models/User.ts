@@ -1,4 +1,5 @@
-import axios from "axios";
+import { Eventing } from "./Eventing";
+import { Sync } from "./Sync";
 
 interface UserProps {
   name?: string;
@@ -6,14 +7,9 @@ interface UserProps {
   id?: number;
 }
 
-interface Events {
-  [key: string]: Callback[];
-}
-
-type Callback = () => void;
-
 export class User {
-  private events: Events = {};
+  events = new Eventing();
+  sync = new Sync<UserProps>("http://localhost:3000/users");
 
   constructor(private data: UserProps) {}
 
@@ -25,31 +21,16 @@ export class User {
     this.data = { ...this.data, ...update };
   }
 
-  on(eventName: string, callback: Callback) {
-    const handlers = this.events[eventName] || [];
-    handlers.push(callback);
-    this.events[eventName] = handlers;
-  }
-
-  trigger(eventName: string) {
-    const handlers = this.events[eventName] || [];
-    for (let callback of handlers) {
-      callback();
-    }
-  }
-
   fetch() {
-    axios.get(`http://localhost:3000/users/${this.data.id}`).then((res) => {
-      this.set(res.data);
-    });
+    if (this.data.id)
+      this.sync.fetch(this.data.id).then((res) => {
+        this.set(res.data);
+      });
   }
 
   save() {
-    if (this.data.id) {
-      axios.put(`http://localhost:3000/users/${this.data.id}`, this.data);
-      return;
-    }
-
-    axios.post(`http://localhost:3000/users`, this.data);
+    this.sync.save(this.data).then((res) => {
+      this.set(res.data);
+    });
   }
 }
