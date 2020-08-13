@@ -9,7 +9,7 @@ export class Sync<T extends { id?: number }> {
 
   save(data: T): AxiosPromise<T> {
     if (data["id"]) {
-      return axios.put(`${this.baseUrl}/${data.id}`, data);
+      return axios.patch(`${this.baseUrl}/${data.id}`, data);
     }
 
     return axios.post(this.baseUrl, data);
