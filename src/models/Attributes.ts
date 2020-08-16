@@ -1,4 +1,6 @@
-export class Attributes<T> {
+import { HasId } from "./Model";
+
+export class Attributes<T extends HasId> {
   constructor(private data: T) {}
 
   getAll(): T {
