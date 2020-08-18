@@ -20,4 +20,9 @@ export class User extends Model<UserProps> {
   static buildUserCollection() {
     return new Collection("http://localhost:3000/users", User.buildUser);
   }
+
+  setRandomAge() {
+    const age = Math.floor(Math.random() * 100);
+    this.set({ age });
+  }
 }
