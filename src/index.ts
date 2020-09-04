@@ -2,6 +2,7 @@ import express from "express";
 import { AppRouter } from "./AppRouter";
 import bodyParser from "body-parser";
 import cookieSession from "cookie-session";
+import "./controllers/RootController";
 import "./controllers/LoginController";
 
 const app = express();

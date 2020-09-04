@@ -3,6 +3,11 @@ import { get, controller, post, bodyValidator } from "./decorators";
 
 @controller("/auth")
 class LoginController {
+  /* @get("/add")
+  add(a: number, b: number): number {
+    return a + b;
+  } */
+
   @get("/login")
   getLogin(req: Request, res: Response) {
     res.send(`
@@ -32,5 +37,11 @@ class LoginController {
     } else {
       res.send("Invalid email or password");
     }
+  }
+
+  @get("/logout")
+  logout(req: Request, res: Response) {
+    req.session = null;
+    res.redirect("/");
   }
 }
